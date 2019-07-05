@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            YelpCamp Webpage
+        </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/style.css">
+        <body>
+            <span>{{>header}}</span>
+            <form class="form-signin" action="/campgrounds" method="POST">
+                <h1 class="h3 mb-3 font-weight-normal">Add New Camps</h1>
+                <div class="form-group">
+                <label for="inputtext" class="sr-only">Name</label>
+                <input type="text" id="inputtext" class="form-control" placeholder="Name" name="name" required autofocus>
+                </div>
+                <div class="form-group">
+                <label for="imageurl" class="sr-only">Image url</label>
+                <input type="text" id="imageurl" class="form-control" placeholder="image url" name="image" required>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                <a href="/campgrounds">Go Back</a>
+            </form>
+                
+            {{>footer}}
+        </body>
+    </head>
+</html>
