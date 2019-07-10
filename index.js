@@ -1,6 +1,8 @@
 const express = require("express");
+require("./Yelp-manager/src/db/mongoose");
 const hbs = require("hbs");
 let bodyParser = require('body-parser');
+const Campground = require("./Yelp-manager/src/model/images");
 
 const app = express();
 
@@ -9,33 +11,60 @@ hbs.registerPartials(__dirname + '/views/partials');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname +"/public"));
 
-const campgrounds = [
-    {name:"Salmon Creek", image:"https://pixabay.com/get/5fe8d1434852b108f5d084609620367d1c3ed9e04e50744f772f7bd19645c2_340.jpg"},
-    {name:"Granite Hill", image:"https://pixabay.com/get/57e8d3444855a914f6da8c7dda793f7f1636dfe2564c704c732d7bd4924ccd5f_340.jpg"},
-    {name:"Mountain Goat Rest", image:"https://pixabay.com/get/50e9d4474856b108f5d084609620367d1c3ed9e04e50744f772f7bd19645c2_340.jpg"},
-    {name:"Mesa Rest Area", image:"https://pixabay.com/get/57e2d54b4852ad14f6da8c7dda793f7f1636dfe2564c704c732d7bd19749cd59_340.jpg"}
-]
-
 app.get("/", (req, res) => {
     res.render("index");
 });
 
 app.get("/campgrounds", (req,res) => {
+    //Get all campgrounds from database:
+    Campground.find({}, (err, allCampgrounds) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.render("campgrounds",{campgrounds: allCampgrounds});
+        }
+    })
    
-    res.render("campgrounds", {campgrounds:campgrounds});
+    
 });
 
 app.post("/campgrounds", (req,res) => {
     const name = req.body.name;
     const image = req.body.image;
-    const newCampground = {name: name, image: image}
-    campgrounds.push(newCampground);
-    res.redirect("/campgrounds");
+    const desc = req.body.description;
+    const newCampground = {name: name, image: image, description : desc}
+    //CREATE NEW CAMPGROUND AND SAVE TO DATABASE:
+    Campground.create(newCampground, (err, newlyCreated) => {
+        if(err){
+            console.log(err)
+        } else {
+            //redirect back to campground page
+            res.redirect("/campgrounds");
+        }
+    })
 });
 
 app.get("/campgrounds/new", (req, res) => {
     res.render("new");
 });
+
+//Show more information about one campground:
+
+app.get("/campgrounds/:id", (req, res) => {
+    //find campground with provided id
+    Campground.findById(req.params.id, (error, foundCampground) => {
+        if(error){
+            console.log(error)
+        } else {
+            //render show template with that campground:
+            res.render("show", {campground : foundCampground});
+        }
+    })
+    
+    
+});
+
+
 
 
 
