@@ -10,15 +10,19 @@
       </li>
     </ul>
     <ul class="navbar-nav">
+      {{#if currentUser}}
       <li class="nav-item">
-        <a class="nav-link" href="/">Login</a>
+        <a class="nav-link" href="/logout" >Logout</a>
+      </li>
+      <li class="nav-link">Signed In as {{currentUser.username}}</li>
+      {{else}}
+       <li class="nav-item">
+        <a class="nav-link" href="/login">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/" >SignUp</a>
+        <a class="nav-link" href="/register" >SignUp</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/" >Logout</a>
-      </li>
+      {{/if}}
     </ul>
   </div>
 </nav>

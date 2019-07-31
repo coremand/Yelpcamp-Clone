@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            YelpCamp Webpage
+        </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <body>
+            {{>header}}
+            
+             <h1>THIS IS THE LOGIN PAGE</h1>
+             <form action="/login" method="POST">
+                <input type="text" name="username" placeholder="username">
+                <input type="password" name="password" placeholder="password">
+                <input type="submit" value="Login">
+             </form>
+            {{>footer}}
+        </body>
+    </head>
+</html>
